@@ -1,0 +1,31 @@
+# Entornos
+.venv/
+venv/
+env/
+
+# Cache y bytecode
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Datos locales (ajusta según tu proyecto)
+data/raw/
+*.csv
+!data/**/.gitkeep
+
+# Variables de entorno / secretos
+.env
+
+# Editor / SO
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+
+# Builds
+dist/
+build/
+*.egg-info/
