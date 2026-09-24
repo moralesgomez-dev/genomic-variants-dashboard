@@ -1,5 +1,5 @@
 [project]
-name = "variantes_genomicas"
+name = "genomic_variants_dashboard"
 version = "0.1.0"
 description = "Plantilla profesional para proyectos de análisis de datos / BI"
 readme = "README.md"

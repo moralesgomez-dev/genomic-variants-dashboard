@@ -14,6 +14,7 @@ __pycache__/
 
 # Datos locales (ajusta según tu proyecto)
 data/raw/
+data/processed/
 *.csv
 !data/**/.gitkeep
 

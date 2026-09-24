@@ -1,6 +1,6 @@
 import pandas as pd
 
-from variantes_genomicas.main import resumen_ventas
+from genomic_variants_dashboard.main import resumen_ventas
 
 
 def test_resumen_ventas_agrupa_y_ordena():
