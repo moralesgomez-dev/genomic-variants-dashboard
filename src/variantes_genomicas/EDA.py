@@ -66,16 +66,16 @@ print(df_variants["CHROM"].sample(5))
 plt.figure(figsize=(11, 6))
 sns.histplot(
 	data=df_variants,
-	x="POS",
+	x=df_variants["POS"] / 1_000_000,
 	bins=60,
 	kde=False,
 	color=PALETTE["EUR_AF"],
 )
 plt.title('Distribution of Variant Positions on Chromosome 22')
-plt.xlabel('Chromosomal position')
+plt.xlabel('Chromosomal position (Mb)')
 plt.ylabel('Number of variants')
 plt.tight_layout()
-plt.savefig("results\\results\\figures\\POS_Distribution.png")
+plt.savefig("results\\figures\\POS_Distribution.png")
 plt.show()
 
 # ID - nos indica el identificador de la variante, si no tiene, es un punto (.) Como hemos visto no tiene ID, por lo que no nos aporta información relevante. Podemos eliminarla.
@@ -100,7 +100,7 @@ plt.xlabel("Reference allele")
 plt.ylabel("Number of variants (log scale)")
 plt.yscale("log")
 plt.tight_layout()
-plt.savefig("results\\results\\figures\\REF_count.png")
+plt.savefig("results\\figures\\REF_count.png")
 plt.show()
 
 # ALT - nos indica los alelos alternativos en esa posicion
@@ -124,7 +124,7 @@ plt.xlabel("Alternative allele")
 plt.ylabel("Number of variants (log scale)")
 plt.yscale("log")
 plt.tight_layout()
-plt.savefig("results\\results\\figures\\ALT_count.png")
+plt.savefig("results\\figures\\ALT_count.png")
 plt.show()
 
 # QUAL - nos indica la calidad de la variante, es un valor numérico que indica la confianza en la llamada de variante. Podemos visualizar su distribución.
@@ -153,16 +153,17 @@ plt.figure(figsize=(11, 6))
 sns.histplot(
 	data=df_variants,
 	x="EAS_AF",
-	bins=30,
-	kde=True,
+	bins=100,
+	binrange=(0.0, 1.0),
+	kde=False,
 	color=PALETTE["EAS_AF"],
 )
 plt.title("Distribution of East Asian Allele Frequencies (EAS_AF)")
 plt.yscale("log")
-plt.xlabel("EAS_AF")
+plt.xlabel("Allele frequency")
 plt.ylabel("Number of variants (Log scale)")
 plt.tight_layout()
-plt.savefig("results\\results\\figures\\EAS_Distribution.png")
+plt.savefig("results\\figures\\EAS_Distribution.png")
 plt.show()
 
 # AMR_AF - Frecuencia alelica para cada alelo alternativo en la población Admixed American (AMR). Valor numérico entre 0 y 1 que indica la proporción de alelos alternativos en la población AMR.
@@ -173,16 +174,17 @@ plt.figure(figsize=(11, 6))
 sns.histplot(
 	data=df_variants,
 	x="AMR_AF",
-	bins=30,
-	kde=True,
+	bins=100,
+	binrange=(0.0, 1.0),
+	kde=False,
 	color=PALETTE["AMR_AF"],
 )
 plt.title("Distribution of Admixed American Allele Frequencies (AMR_AF)")
 plt.yscale("log")
-plt.xlabel("AMR_AF")
+plt.xlabel("Allele frequency")
 plt.ylabel("Number of variants (Log scale)")
 plt.tight_layout()
-plt.savefig("results\\results\\figures\\AMR_Distribution.png")
+plt.savefig("results\\figures\\AMR_Distribution.png")
 plt.show()
 
 # AFR_AF - Frecuencia alelica para cada alelo alternativo en la población Africana (AFR). Valor numérico entre 0 y 1 que indica la proporción de alelos alternativos en la población AFR.
@@ -193,16 +195,17 @@ plt.figure(figsize=(11, 6))
 sns.histplot(
 	data=df_variants,
 	x="AFR_AF",
-	bins=30,
-	kde=True,
+	bins=100,
+	binrange=(0.0, 1.0),
+	kde=False,
 	color=PALETTE["AFR_AF"],
 )
-plt.title("Distribution of Admixed American Allele Frequencies (AFR_AF)")
+plt.title("Distribution of African Allele Frequencies (AFR_AF)")
 plt.yscale("log")
-plt.xlabel("AFR_AF")
+plt.xlabel("Allele frequency")
 plt.ylabel("Number of variants (Log scale)")
 plt.tight_layout()
-plt.savefig("results\\results\\figures\\AFR_Distribution.png")
+plt.savefig("results\\figures\\AFR_Distribution.png")
 plt.show()
 
 # EUR_AF - Frecuencia alelica para cada alelo alternativo en la población Europea (EUR). Valor numérico entre 0 y 1 que indica la proporción de alelos alternativos en la población EUR.
@@ -213,16 +216,17 @@ plt.figure(figsize=(11, 6))
 sns.histplot(
 	data=df_variants,
 	x="EUR_AF",
-	bins=30,
-	kde=True,
+	bins=100,
+	binrange=(0.0, 1.0),
+	kde=False,
 	color=PALETTE["EUR_AF"],
 )
-plt.title("Distribution of Admixed American Allele Frequencies (EUR_AF)")
+plt.title("Distribution of European Allele Frequencies (EUR_AF)")
 plt.yscale("log")
-plt.xlabel("EUR_AF")
+plt.xlabel("Allele frequency")
 plt.ylabel("Number of variants (Log scale)")
 plt.tight_layout()
-plt.savefig("results\\results\\figures\\EUR_Distribution.png")
+plt.savefig("results\\figures\\EUR_Distribution.png")
 plt.show()
 
 # SAS_AF - Frecuencia alelica para cada alelo alternativo en la población Sur Asiatica (SAS). Valor numérico entre 0 y 1 que indica la proporción de alelos alternativos en la población SAS.
@@ -233,16 +237,17 @@ plt.figure(figsize=(11, 6))
 sns.histplot(
 	data=df_variants,
 	x="SAS_AF",
-	bins=30,
-	kde=True,
+	bins=100,
+	binrange=(0.0, 1.0),
+	kde=False,
 	color=PALETTE["SAS_AF"],
 )
-plt.title("Distribution of Admixed American Allele Frequencies (SAS_AF)")
+plt.title("Distribution of South Asian Allele Frequencies (SAS_AF)")
 plt.yscale("log")
-plt.xlabel("SAS_AF")
+plt.xlabel("Allele frequency")
 plt.ylabel("Number of variants (Log scale)")
 plt.tight_layout()
-plt.savefig("results\\results\\figures\\SAS_Distribution.png")
+plt.savefig("results\\figures\\SAS_Distribution.png")
 plt.show()
 
 # VT - indioca el tipo de variante genomica
@@ -254,15 +259,13 @@ sns.countplot(
     data=df_variants,
     x="VT",
     color=PALETTE["VT"],
-    hue="VT",
-    legend=False
 )
-plt.title("Frecuency of Variant Type (VT INFO field)")
+plt.title("Frequency of Variant Type (VT INFO field)")
 plt.yscale("log")
 plt.xlabel("Genetic Variant Type")
 plt.ylabel("Number of variants (log scale)")
 plt.tight_layout()
-plt.savefig("results\\results\\figures\\VT_frecuency.png")
+plt.savefig("results\\figures\\VT_frecuency.png")
 plt.show()
 
 # BOXPLOT de distribucion de frecuencias alelicas por poblacion
@@ -294,14 +297,20 @@ sns.boxplot(
     x="Population",
     y="Allele frequency",
     order=["EAS", "AFR", "AMR", "SAS", "EUR"],
+	hue="Population",
+	hue_order=["EAS", "AFR", "AMR", "SAS", "EUR"],
     palette=[palette_by_population[p] for p in ["EAS", "AFR", "AMR", "SAS", "EUR"]],
+	dodge=False,
+	legend=False,
+	showfliers=False,
 )
-plt.title("Distribution of Allele Frequency by Population")
-plt.yscale("log")
+plt.title("Allele Frequency by Population (0-1.5% zoom)")
+plt.ylim(0, 0.015)
+plt.yticks([0, 0.005, 0.01, 0.015], ["0%", "0.5%", "1.0%", "1.5%"])
 plt.xlabel("Population")
 plt.ylabel("Allele frequency")
 plt.tight_layout()
-plt.savefig("results\\results\\figures\\boxplot.png")
+plt.savefig("results\\figures\\boxplot.png")
 plt.show()
 
 plt.figure(figsize=(11, 6))
@@ -310,14 +319,29 @@ sns.violinplot(
     x="Population",
     y="Allele frequency",
     order=["EAS", "AFR", "AMR", "SAS", "EUR"],
+	hue="Population",
+	hue_order=["EAS", "AFR", "AMR", "SAS", "EUR"],
     palette=[palette_by_population[p] for p in ["EAS", "AFR", "AMR", "SAS", "EUR"]],
+	dodge=False,
+	legend=False,
+	cut=0,
 )
-plt.title("Distribution of Allele Frequency by Population")
-plt.yscale("log")
+plt.title("Allele Frequency by Population (0-5% zoom)")
+plt.ylim(0, 0.05)
+plt.yticks([0, 0.01, 0.02, 0.03, 0.04, 0.05], ["0%", "1%", "2%", "3%", "4%", "5%"])
 plt.xlabel("Population")
 plt.ylabel("Allele frequency")
 plt.tight_layout()
-plt.savefig("results\\results\\figures\\violinplot.png")
+plt.savefig("results\\figures\\violinplot.png")
 plt.show()
+
+# EDA ASUMPTIONS:
+# 1. Hay varias columnas que no aportan variabilidad a la informacion, es decir, son constantes en todos los datos --> Valores estaticos: CHROM, QUAL, FILTER, FORMAT, ID
+# 2. Mayor presencia de variantes genicas como INDEL o SNP frente a otras
+# 3. Mayor frecuencia de las bases de A G C T frente a otras en las referencias alelicas
+# 4. No existe mucha diferencia entre la posicion de las variantes en la posicion del cromosoma
+# 5. La poblacion africana es la que presenta una distribucion e variaciones alelicas mas llamativa frente al resto de poblaciones
+
+
 
 

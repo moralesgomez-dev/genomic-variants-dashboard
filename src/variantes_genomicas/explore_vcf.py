@@ -1,6 +1,7 @@
 import gzip
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 
@@ -75,3 +76,55 @@ df_variants_processed.drop(columns=["INFO"], inplace=True)
 final_df = pd.concat([df_variants_processed, info_df], axis=1)
 print(final_df.head())
 final_df.to_csv("C:\\Users\\alexm\\Entornos\\genomic_variants_dashboard\\data\\processed\\final_variants_chr22.csv", index=False)
+
+# Modificacion final para TABLEAU
+# Creamos una unica columna para la poblacion y su frecuencia alelica
+AF_COLUMNS = [
+    "EAS_AF",
+    "AMR_AF",
+    "AFR_AF",
+    "EUR_AF",
+    "SAS_AF",
+]
+
+tableau_variants = final_df.melt(
+    id_vars=[column for column in final_df.columns if column not in AF_COLUMNS],
+    value_vars=AF_COLUMNS,
+    var_name="population",
+    value_name="Allele Frequency",
+)
+tableau_variants["population"] = tableau_variants["population"].str.removesuffix("_AF")
+tableau_variants.to_csv(
+    "C:\\Users\\alexm\\Entornos\\genomic_variants_dashboard\\data\\processed\\tableau_variants_chr22.csv",
+    index=False,
+)
+
+# Add stable IDs without changing the melted rows or their order.
+variant_count = len(final_df)
+population_order = [column.removesuffix("_AF") for column in AF_COLUMNS]
+expected_rows = variant_count * len(AF_COLUMNS)
+
+if len(tableau_variants) != expected_rows:
+    raise ValueError("The long-form CSV must contain five rows per original variant.")
+
+for block_index, population in enumerate(population_order):
+    start = block_index * variant_count
+    end = start + variant_count
+    if not tableau_variants["population"].iloc[start:end].eq(population).all():
+        raise ValueError(f"Expected the {population} population block at rows {start}:{end}.")
+
+tableau_variants["VariantID"] = np.tile(
+    np.arange(variant_count, dtype="int64"),
+    len(AF_COLUMNS),
+)
+
+if not np.array_equal(
+    tableau_variants["VariantID"].to_numpy().reshape(len(AF_COLUMNS), variant_count),
+    np.broadcast_to(np.arange(variant_count), (len(AF_COLUMNS), variant_count)),
+):
+    raise ValueError("Each original variant must have the same VariantID in all populations.")
+
+tableau_variants.to_csv(
+    "C:\\Users\\alexm\\Entornos\\genomic_variants_dashboard\\data\\processed\\tableau_variants_chr22_with_variant_id.csv",
+    index=False,
+)
