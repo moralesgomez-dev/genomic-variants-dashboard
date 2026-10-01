@@ -1,6 +1,13 @@
-import seaborn as sns
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROCESSED_DATA_DIR = PROJECT_ROOT / "data" / "processed"
+FIGURES_DIR = PROJECT_ROOT / "results" / "figures"
+FIGURES_DIR.mkdir(parents=True, exist_ok=True)
 
 # Configuración visual compartida para los gráficos del proyecto
 sns.set_theme(
@@ -45,7 +52,7 @@ BASE_PALETTE = {
 }
 
 #Carga de datos
-df_variants = pd.read_csv("C:\\Users\\alexm\\Entornos\\genomic_variants_dashboard\\data\\processed\\final_variants_chr22.csv")
+df_variants = pd.read_csv(PROCESSED_DATA_DIR / "final_variants_chr22.csv")
 
 # Cargar el CSV procesado y revisar shape, tipos de datos y nulos
 print("Shape:", df_variants.shape)
@@ -75,7 +82,7 @@ plt.title('Distribution of Variant Positions on Chromosome 22')
 plt.xlabel('Chromosomal position (Mb)')
 plt.ylabel('Number of variants')
 plt.tight_layout()
-plt.savefig("results\\figures\\POS_Distribution.png")
+plt.savefig(FIGURES_DIR / "POS_Distribution.png")
 plt.show()
 
 # ID - nos indica el identificador de la variante, si no tiene, es un punto (.) Como hemos visto no tiene ID, por lo que no nos aporta información relevante. Podemos eliminarla.
@@ -100,7 +107,7 @@ plt.xlabel("Reference allele")
 plt.ylabel("Number of variants (log scale)")
 plt.yscale("log")
 plt.tight_layout()
-plt.savefig("results\\figures\\REF_count.png")
+plt.savefig(FIGURES_DIR / "REF_count.png")
 plt.show()
 
 # ALT - nos indica los alelos alternativos en esa posicion
@@ -124,7 +131,7 @@ plt.xlabel("Alternative allele")
 plt.ylabel("Number of variants (log scale)")
 plt.yscale("log")
 plt.tight_layout()
-plt.savefig("results\\figures\\ALT_count.png")
+plt.savefig(FIGURES_DIR / "ALT_count.png")
 plt.show()
 
 # QUAL - nos indica la calidad de la variante, es un valor numérico que indica la confianza en la llamada de variante. Podemos visualizar su distribución.
@@ -163,7 +170,7 @@ plt.yscale("log")
 plt.xlabel("Allele frequency")
 plt.ylabel("Number of variants (Log scale)")
 plt.tight_layout()
-plt.savefig("results\\figures\\EAS_Distribution.png")
+plt.savefig(FIGURES_DIR / "EAS_Distribution.png")
 plt.show()
 
 # AMR_AF - Frecuencia alelica para cada alelo alternativo en la población Admixed American (AMR). Valor numérico entre 0 y 1 que indica la proporción de alelos alternativos en la población AMR.
@@ -184,7 +191,7 @@ plt.yscale("log")
 plt.xlabel("Allele frequency")
 plt.ylabel("Number of variants (Log scale)")
 plt.tight_layout()
-plt.savefig("results\\figures\\AMR_Distribution.png")
+plt.savefig(FIGURES_DIR / "AMR_Distribution.png")
 plt.show()
 
 # AFR_AF - Frecuencia alelica para cada alelo alternativo en la población Africana (AFR). Valor numérico entre 0 y 1 que indica la proporción de alelos alternativos en la población AFR.
@@ -205,7 +212,7 @@ plt.yscale("log")
 plt.xlabel("Allele frequency")
 plt.ylabel("Number of variants (Log scale)")
 plt.tight_layout()
-plt.savefig("results\\figures\\AFR_Distribution.png")
+plt.savefig(FIGURES_DIR / "AFR_Distribution.png")
 plt.show()
 
 # EUR_AF - Frecuencia alelica para cada alelo alternativo en la población Europea (EUR). Valor numérico entre 0 y 1 que indica la proporción de alelos alternativos en la población EUR.
@@ -226,7 +233,7 @@ plt.yscale("log")
 plt.xlabel("Allele frequency")
 plt.ylabel("Number of variants (Log scale)")
 plt.tight_layout()
-plt.savefig("results\\figures\\EUR_Distribution.png")
+plt.savefig(FIGURES_DIR / "EUR_Distribution.png")
 plt.show()
 
 # SAS_AF - Frecuencia alelica para cada alelo alternativo en la población Sur Asiatica (SAS). Valor numérico entre 0 y 1 que indica la proporción de alelos alternativos en la población SAS.
@@ -247,7 +254,7 @@ plt.yscale("log")
 plt.xlabel("Allele frequency")
 plt.ylabel("Number of variants (Log scale)")
 plt.tight_layout()
-plt.savefig("results\\figures\\SAS_Distribution.png")
+plt.savefig(FIGURES_DIR / "SAS_Distribution.png")
 plt.show()
 
 # VT - indioca el tipo de variante genomica
@@ -265,7 +272,7 @@ plt.yscale("log")
 plt.xlabel("Genetic Variant Type")
 plt.ylabel("Number of variants (log scale)")
 plt.tight_layout()
-plt.savefig("results\\figures\\VT_frecuency.png")
+plt.savefig(FIGURES_DIR / "VT_frecuency.png")
 plt.show()
 
 # BOXPLOT de distribucion de frecuencias alelicas por poblacion
@@ -310,7 +317,7 @@ plt.yticks([0, 0.005, 0.01, 0.015], ["0%", "0.5%", "1.0%", "1.5%"])
 plt.xlabel("Population")
 plt.ylabel("Allele frequency")
 plt.tight_layout()
-plt.savefig("results\\figures\\boxplot.png")
+plt.savefig(FIGURES_DIR / "boxplot.png")
 plt.show()
 
 plt.figure(figsize=(11, 6))
@@ -332,7 +339,7 @@ plt.yticks([0, 0.01, 0.02, 0.03, 0.04, 0.05], ["0%", "1%", "2%", "3%", "4%", "5%
 plt.xlabel("Population")
 plt.ylabel("Allele frequency")
 plt.tight_layout()
-plt.savefig("results\\figures\\violinplot.png")
+plt.savefig(FIGURES_DIR / "violinplot.png")
 plt.show()
 
 # EDA ASUMPTIONS:

@@ -1,5 +1,4 @@
-# scripts/setup.ps1
-# Bootstrap del entorno del proyecto usando uv en lugar de venv manual.
+# Bootstrap the project environment with uv.
 
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
     Write-Host "uv no está instalado. Instalando..."
@@ -8,13 +7,19 @@ if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
 
 Write-Host "Sincronizando dependencias (incluye grupo dev)..."
 uv sync --all-extras
+if ($LASTEXITCODE -ne 0) {
+    throw "uv sync failed."
+}
 
 Write-Host "Instalando hooks de pre-commit..."
-uv run pre-commit install
+\.venv\Scripts\python.exe -m pre_commit install
+if ($LASTEXITCODE -ne 0) {
+    throw "pre-commit installation failed."
+}
 
 Write-Host ""
 Write-Host "Entorno listo."
-Write-Host "  - Ejecutar el script principal: uv run python src/mi_paquete/main.py"
-Write-Host "  - Lanzar Jupyter:                uv run jupyter lab"
-Write-Host "  - Correr tests:                  uv run pytest"
-Write-Host "  - Lint manual:                   uv run ruff check ."
+Write-Host "  - Procesar VCF:                  .\.venv\Scripts\python.exe src\variantes_genomicas\explore_vcf.py"
+Write-Host "  - Generar figuras:               .\.venv\Scripts\python.exe src\variantes_genomicas\EDA.py"
+Write-Host "  - Correr tests:                  .\.venv\Scripts\python.exe -m pytest"
+Write-Host "  - Lint manual:                   .\.venv\Scripts\ruff.exe check ."
