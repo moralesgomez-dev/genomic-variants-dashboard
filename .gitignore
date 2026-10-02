@@ -12,11 +12,12 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 
-# Datos locales (ajusta según tu proyecto)
+# Datos locales 
 data/raw/
 data/processed/
 *.csv
 !data/**/.gitkeep
+!data/processed/Libro1.twb
 
 # Variables de entorno / secretos
 .env
